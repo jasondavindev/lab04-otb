@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: lab04_db
+    image: mysql:8.0.27
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "test"
+      MYSQL_USER: "dba"
+      MYSQL_PASSWORD: "dba"
+    volumes:
+      - ./data/db:/var/lib/mysql
+
+  python:
+    container_name: lab04_python
+    image: python-lab04
+    build:
+      context: .
+    working_dir: /apps
+    command: sleep 10000000000
+    volumes:
+      - $PWD/apps:/apps
+
+networks:
+  default:
+    name: lab04
